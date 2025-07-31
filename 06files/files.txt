@@ -1,0 +1,1 @@
+This sample of file is created using GO programming language.

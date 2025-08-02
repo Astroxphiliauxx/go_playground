@@ -21,6 +21,9 @@ func main() {
 	EncodeJsonUnstructured()
 	fmt.Println("This is the structured JSON encoding example:")
 	EncodeJsonStructured()
+
+	fmt.Println("This is the JSON decoding example:")
+	decodeJson()
 }
 
 func EncodeJsonUnstructured() {
@@ -47,4 +50,44 @@ func EncodeJsonStructured() {
 	//MarshalIndent uses 3 params, middle one is kinda useless, leave blank. The last one is the indentation string
 	finalData, _ := json.MarshalIndent(mycourse, "", "\t")
 	fmt.Println(string(finalData))
+}
+
+func decodeJson() {
+
+	// when ever data came from the web, it is in byte format
+	// so we need to convert it to string format
+	jsonDataFromWeb := []byte(`
+	
+	   {
+                "name": "JavaScript Programming",
+                "price": 90,
+                "domain": "Programming",
+                "rating": 4,
+                "duration": "5 weeks",
+                "tags": ["JavaScript","Programming","Web Development"]
+        }
+	
+	
+	`)
+
+	var mycourse course
+
+	checkValid := json.Valid(jsonDataFromWeb)
+
+	if !checkValid {
+		fmt.Println("Invalid JSON data")
+		return
+	}
+
+	json.Unmarshal(jsonDataFromWeb, &mycourse)       //not passing copy because it will modify the changes, in actual places
+	fmt.Printf("Decoded JSON data: %#v\n", mycourse) // %#v prints the struct with field names
+
+	// Also, there is a method in which this can be decoded directly into a map
+	var myMap map[string]any // using `any` to allow any type of value in the map
+
+	json.Unmarshal(jsonDataFromWeb, &myMap)
+
+	//this print the map with field names and values
+	fmt.Printf("Decoded JSON data into map: %#v\n", myMap)
+
 }

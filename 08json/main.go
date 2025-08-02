@@ -5,13 +5,14 @@ import (
 	"fmt"
 )
 
+// you can also change the struct's field names to match the JSON keys
 type course struct {
-	Name     string
-	Price    int
-	Domain   string
-	Rating   int
-	Duration string
-	Tags     []string //slice of strings
+	Name     string   `json:"name"` //these backticks define and definately have lots of usage
+	Price    int      `json:"price"`
+	Domain   string   `json:"domain"`
+	Rating   int      `json:"rating"`
+	Duration string   `json:"duration"`
+	Tags     []string `json:"tags"` //slice of strings
 }
 
 func main() {
